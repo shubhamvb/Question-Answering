@@ -1,8 +1,9 @@
 from CosineSimilarity import getCosineSimilarity
-from nltk.tag.stanford import StanfordNERTagger
+from NERTags import get_ner_tags
 
-window_length = 12
-#generated windows of paragraph strings of a particular size  
+window_length = 14
+
+#generated list of paragraph strings of a particular window length
 def get_sliding_window(para):
 
 	a=para.split()
@@ -13,13 +14,6 @@ def get_sliding_window(para):
 	
 	return c
 
-#gets the NER tags for a probable answer setnence
-def get_ner_tags(answer):
-
-	st = StanfordNERTagger('/Users/shubhambarhate/Desktop/project3/stanford-ner-2017-06-09/classifiers/english.all.3class.distsim.crf.ser.gz',
-           '/Users/shubhambarhate/Desktop/project3/stanford-ner-2017-06-09/stanford-ner.jar')
-
-	return st.tag(context_list[0].split())
 
 
 def get_most_probable_answer(probable_ans):
@@ -28,6 +22,7 @@ def get_most_probable_answer(probable_ans):
 	print(ner)
 	return probable_ans
 
+#Uses Cosine Similarity to get the most probable sentenc, where we expect to discover our answer
 def get_answer(window, q):
 	maxSimilarity = -float("inf")
 	for i in window:
@@ -38,6 +33,7 @@ def get_answer(window, q):
 	#probable_ans = get_most_probable_answer(probable_ans)
 	return probable_ans
 
+#calls the get_answer method for every questions and stores the answer sentence corresponding to every Question id
 def get_para_answer(index, para, q_dict):
 	output_dict = dict()
 

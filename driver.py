@@ -5,7 +5,7 @@
 
 import json
 from nltk.tag.stanford import StanfordNERTagger
-from question_answer import get_para_answer
+from QuestionAnswer import get_para_answer
 
 def read_json(file):
     with open(file, 'r') as f:
@@ -58,9 +58,16 @@ def main():
     
     #sample_text = read_json(sample_file)
     #train_text = read_json(train_file)
+    
+    #test_text contains the json text for testing.json
     test_text = read_json(test_file)
 
-    #test_dict contains the json text for testing.json
+    #context_list contains paragraphs. context_list[0] contains first paragraph and so on
+    #test_dict is a nested dictionary , For the first paragraph, 0 is the key, and value is a dictionary of question and ids pairs
+    # 0 : 
+    #      "Quesgion 1" : "id1"
+    #      "Quesgion 2" : "id2"
+
     test_dict, context_list = convert_input_to_dict(test_text)
     
     #ans_dict will have q id as key and answer phrase as the value
@@ -82,11 +89,6 @@ def main():
     #Used to generate the output json file
     generate_output_json(ans_dict)
     
-    '''
-    st = StanfordNERTagger('/Users/shubhambarhate/Desktop/project3/stanford-ner-2017-06-09/classifiers/english.all.3class.distsim.crf.ser.gz',
-           '/Users/shubhambarhate/Desktop/project3/stanford-ner-2017-06-09/stanford-ner.jar')
-    print(st.tag(context_list[0].split()))
-    '''
     
     
 if __name__ == "__main__":

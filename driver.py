@@ -59,25 +59,29 @@ def main():
     #sample_text = read_json(sample_file)
     #train_text = read_json(train_file)
     test_text = read_json(test_file)
-    test_dict, context_list = convert_input_to_dict(test_text)
-    #print(test_dict[55])
-    #print(len(context_list))
 
+    #test_dict contains the json text for testing.json
+    test_dict, context_list = convert_input_to_dict(test_text)
+    
+    #ans_dict will have q id as key and answer phrase as the value
     ans_dict = dict()
-    print(test_dict[0])
     index = 0
 
+    #this just gets answers for the questions associated with the first paragraph
     dictionary = get_para_answer(0, context_list[0], test_dict[0])
     ans_dict.update(dictionary)
 
+    #generic loop for iterating through every paragraph and and getting answers for its questions
     '''
     for i in context_list:
         dictionary = get_para_answer(index, i, test_dict[index])
         ans_dict.update(dictionary)
         index += 1
     '''
-    #dictionary = {"5725cc2038643c19005acd1d": "and liquid"}
+    
+    #Used to generate the output json file
     generate_output_json(ans_dict)
+    
     '''
     st = StanfordNERTagger('/Users/shubhambarhate/Desktop/project3/stanford-ner-2017-06-09/classifiers/english.all.3class.distsim.crf.ser.gz',
            '/Users/shubhambarhate/Desktop/project3/stanford-ner-2017-06-09/stanford-ner.jar')

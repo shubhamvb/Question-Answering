@@ -1,16 +1,19 @@
 from CosineSimilarity import getCosineSimilarity
 from nltk.tag.stanford import StanfordNERTagger
 
+window_length = 12
+#generated windows of paragraph strings of a particular size  
 def get_sliding_window(para):
 
 	a=para.split()
-	b = [a[i:i+12] for i in range(len(a)-11)]
+	b = [a[i:i+window_length] for i in range(len(a)- (window_length -1))]
 	c = []
 	for i  in b:
 		c.append(" ".join(i))
 	
 	return c
 
+#gets the NER tags for a probable answer setnence
 def get_ner_tags(answer):
 
 	st = StanfordNERTagger('/Users/shubhambarhate/Desktop/project3/stanford-ner-2017-06-09/classifiers/english.all.3class.distsim.crf.ser.gz',
